@@ -32,6 +32,7 @@ import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.buffs.Amok;
 import com.watabou.pixeldungeon.actors.buffs.Light;
+import com.watabou.pixeldungeon.actors.buffs.Rage;
 import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.actors.hero.HeroClass;
 import com.watabou.pixeldungeon.actors.mobs.npcs.Blacksmith;
@@ -78,7 +79,6 @@ public class Dungeon {
 	public static int scrollsOfUpgrade;
 	public static int scrollsOfEnchantment;
 	public static boolean dewVial;		// true if the dew vial can be spawned
-	public static int transmutation;	// depth number for a well of transmutation
 	
 	public static int challenges;
 	
@@ -129,7 +129,6 @@ public class Dungeon {
 		scrollsOfUpgrade = 0;
 		scrollsOfEnchantment = 0;
 		dewVial = true;
-		transmutation = Random.IntRange( 6, 14 );
 		
 		chapters = new HashSet<Integer>();
 		
@@ -339,7 +338,6 @@ public class Dungeon {
 	private static final String SOU			= "scrollsOfEnhancement";
 	private static final String SOE			= "scrollsOfEnchantment";
 	private static final String DV			= "dewVial";
-	private static final String WT			= "transmutation";
 	private static final String CHAPTERS	= "chapters";
 	private static final String QUESTS		= "quests";
 	private static final String BADGES		= "badges";
@@ -387,7 +385,6 @@ public class Dungeon {
 		bundle.put( SOU, scrollsOfUpgrade );
 		bundle.put( SOE, scrollsOfEnchantment );
 		bundle.put( DV, dewVial );
-		bundle.put( WT, transmutation );
 
 		int count = 0;
 		int ids[] = new int[chapters.size()];
@@ -420,7 +417,6 @@ public class Dungeon {
 		bundle.put( BADGES, badges );
 
 		return bundle;
-
 	}
 
 	public static void saveUndo () {
@@ -536,7 +532,6 @@ public class Dungeon {
 		scrollsOfUpgrade = bundle.getInt( SOU );
 		scrollsOfEnchantment = bundle.getInt( SOE );
 		dewVial = bundle.getBoolean( DV );
-		transmutation = bundle.getInt( WT );
 		
 		if (fullLoad) {
 			chapters = new HashSet<Integer>();
@@ -694,7 +689,7 @@ public class Dungeon {
 			return Actor.findChar( to ) == null && (pass[to] || Level.avoid[to]) ? to : -1;
 		}
 		
-		if (ch.flying || ch.buff( Amok.class ) != null) {
+		if (ch.flying || ch.buff( Amok.class ) != null || ch.buff( Rage.class ) != null) {
 			BArray.or( pass, Level.avoid, passable );
 		} else {
 			System.arraycopy( pass, 0, passable, 0, Level.LENGTH );
