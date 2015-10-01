@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="org.ayal.pixeldungeonundone"
-	android:versionCode="71"
-	android:versionName="1.7.5a_02"
+	android:versionCode="72"
+	android:versionName="1.9.1u"
 	android:installLocation="auto">
 
     <uses-permission android:name="android.permission.VIBRATE"/>
